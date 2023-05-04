@@ -1,59 +1,66 @@
-const containerDiv = document.querySelector("#container");
+let color = "black";
 
-function makeRows(rows, columns) {
-    containerDiv.style.setProperty("--grid-rows", rows);
-    containerDiv.style.setProperty("--grid-Columns", columns);
-    console.log(containerDiv);
-    console.log(rows);
-    console.log(columns);
-    for (i = 0; i < (rows * columns); i++) {
-        let square = document.createElement("div");
-        square.innerHTML = (i + 1);
-        containerDiv.appendChild(square).clssName = "grid-items";
+
+function populateBoard(size) {
+    let board = document.querySelector(".board"); // seleciona o item board no html
+    let squares = board.querySelectorAll("div");
+    squares.forEach((div) => div.remove());
+    board.style.gridTemplateColumns = `repeat(${size} , 1fr)`; // define o numero de colunas como 16
+    board.style.gridTemplateRows = `repeat(${size} , 1fr)`;   // define o numero de linhas como 16
+
+    let amount = size * size;
+for (let i = 0; i < amount; i++){
+    let square = document.createElement("div");
+    square.addEventListener("mouseover", colorSquare);
+    square.style.backgroundColor = "blue";
+    board.insertAdjacentElement("beforeend", square);
     }
 }
 
-makeRows(16, 16);
+populateBoard(16);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-const containerDiv = document.querySelector("#container") // armazena o container do html no containerDiv.
-let gridCount = 0; // inicia a variavél gridCount com o valor 0.
-
-while (gridCount < 32) {
-    const gridDivs = document.createElement("div") // variavel gridDivs cria o elemento div.
-    gridDivs.classList.add("content"); // adiciona as divs criada por gridDivs a classe "content".
-    gridDivs.textContent = "HELLO!"; // escreve dentro dessas divs a  palavra "hello".
-    containerDiv.appendChild(gridDivs); // adiciona gridDivs(filho) dentro do containerDiv(pai).
-    gridCount++; // enquanto for menor que 32 ele adiciona + 1.
-    console.log(gridCount); // mostra a contagem dos gridCount.
+function changeSize(input) {
+    if (input >= 2 && input <= 100) { // verifica se tem mais de 2 e menos que 100
+        populateBoard(input);
+    }else {
+        console.log("too many squares");
+    }
 }
-*/
+
+function colorSquare(){
+    if (color === "random"){
+        this.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
+    }else {
+        this.style.backgroundColor = color;
+    }
+}
+ 
+function changeColor(choice) {
+    color = choice;
+}
+
+
+
+function resetBoard() {
+    let board = document.querySelector(".board"); // seleciona o item board no html
+    let squares = board.querySelectorAll("div");
+    squares.forEach((div) => div.style.backgroundColor = "white");
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
